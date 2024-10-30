@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Dashboard</title>
+    <style>
+        /* Color Theme */
+        :root {
+            --primary-color: #CFB991; /* Boilermaker Gold */
+            --secondary-color: #6C757D; /* Gray */
+            --accent-color: #000000; /* Black */
+            --title-color: #555960; /* Card Title Color */
+            --main-title-color: #8E6F3E; /* Main Title Color */
+            --background-color: #F8F9FA; /* Light Background */
+            --white: #FFFFFF; /* White */
+            --text-color: #212529; /* Dark Text */
+        }
+
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body */
+        body {
+            background-image: url('./Mackey.jpeg'); /* Replace with your image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--main-title-color); /* Main Title Color */
+            color: var(--white);
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Container for Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--white);
+            border: 1px solid var(--secondary-color);
+            border-radius: 10px;
+            width: 260px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            text-align: left;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: var(--title-color); /* Updated Title Color */
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        /* Button Links */
+        .card a {
+            display: inline-block;
+            background-color: var(--primary-color); /* Boilermaker Gold */
+            color: var(--accent-color); /* Black text */
+            text-align: center;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .card a:hover {
+            background-color: var(--accent-color); /* Hover Black */
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+
+ 
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2024/10/22/20/20241022205533-PSTDA55D.js"></script>
+    
+    
+    
+    <!-- Header -->
+    <header>
+        LMS Dashboard
+    </header>
+
+    <!-- Card Container -->
+    <div class="card-container">
+        <!-- Sample Card 1 -->
+        <div class="card">
+            <h2>Course Materials</h2>
+            <p>Access lecture notes, assignments, and supplementary readings for all your courses in one place.</p>
+            <a href="#">Go to Course Materials</a>
+        </div>
+
+        <!-- Sample Card 2 -->
+        <div class="card">
+            <h2>Grades and Feedback</h2>
+            <p>View grades and feedback from your professors. Track your progress and performance across all courses.</p>
+            <a href="#">Check Grades</a>
+        </div>
+
+        <!-- Sample Card 3 -->
+        <div class="card">
+            <h2>Class Schedule</h2>
+            <p>Keep track of your class timings and stay on top of upcoming lectures, labs, and exams.</p>
+            <a href="#">View Schedule</a>
+        </div>
+
+        <!-- Sample Card 4 -->
+        <div class="card">
+            <h2>Messages and Announcements</h2>
+            <p>Receive important updates and announcements from instructors and classmates.</p>
+            <a href="#">View Messages</a>
+        </div>
+
+        <!-- Sample Card 5 -->
+        <div class="card">
+            <h2>Financial Aid</h2>
+            <p>Check your financial aid status and stay informed about available scholarships and resources.</p>
+            <a href="#">Financial Aid Info</a>
+        </div>
+
+        <!-- Sample Card 6 -->
+        <div class="card">
+            <h2>Support and Resources</h2>
+            <p>Get assistance with academic support, career services, and access helpful resources.</p>
+            <a href="#">Contact Support</a>
+        </div>
+    </div>
+    <script>
+        let isBot = false;
+        // Listening to a message received event=
+        window.botpress.on('*', (event) => {
+            isBot = true;
+            if (event.type === "message") {
+                console.log("A new message was received!");
+                console.log(event)
+                const message_received = event?.payload?.payload?.blocks?.[0]?.block?.text ?? event?.payload?.payload?.block?.text;
+                if (message_received === 'please upload') {
+                    triggerFileUploadOnLoad();
+                }
+            }
+        });
+
+        function triggerFileUploadOnLoad() {
+            // Create a hidden file input element
+            const fileInput = document.createElement('input');
+            let errorMessage = '';
+            fileInput.type = "file";
+            fileInput.style.display = "none"; // Hide the file input
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                console.log('Selected file:', file);
+                let fileContent = '';
+                const title = file.name;
+                const type_of_doc = file.type;
+                const reader = new FileReader();
+                type_of_doc === 'application/pdf' ? reader.readAsArrayBuffer(file) : reader.readAsText(file);
+                reader.onload = async function (event) {
+                    console.log('File name:', title);
+                    console.log('File type:', type_of_doc)
+
+                    if (type_of_doc === 'application/pdf') 
+                    {
+                        const pdfData = new Uint8Array(event.target.result);
+                        fileContent = await extractPDFText(pdfData); 
+                    }
+                    else if(type_of_doc === 'text/plain')
+                    {
+                        fileContent= event.target.result;
+                    }
+                    else 
+                    {
+                        errorMessage = 'Please upload the supported files. pdf and txt only'
+                    }
+
+                    console.log('File content:', fileContent.slice(0, 100));
+                    if (isBot) {
+                        window.botpress.sendEvent({
+                            type: 'trigger',
+                            payload: {
+                                title: title,
+                                content: fileContent.slice(0, 1000),
+                                type_of_doc: type_of_doc,
+                                error: errorMessage
+                            }
+                        }
+                        )
+                    }
+                };
+            })
+
+
+            // Automatically trigger the file input on page load
+            fileInput.click();
+
+            // Append the file input to the body
+            document.body.appendChild(fileInput);
+        }
+        // Function to extract text from a single page
+        async function getTextFromPage(page) {
+            const textContent = await page.getTextContent();
+            let pageText = '';
+            textContent.items.forEach(function (item) {
+            pageText += item.str + ' '; // Append each line of text
+            });
+            return pageText;
+        }
+
+        // Function to process the PDF
+        async function extractPDFText(pdfData) {
+            const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+            const pdf = await loadingTask.promise;
+            let fullText = ''; // Initialize an empty string to store the entire PDF text
+
+            // Loop through all pages
+            for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const pageText = await getTextFromPage(page); // Extract text from the current page
+            fullText += pageText + '\n'; // Append text to the full document text
+            }
+
+            return fullText; // Return the complete extracted text
+        }
+    </script>
+</body>
+</html>
